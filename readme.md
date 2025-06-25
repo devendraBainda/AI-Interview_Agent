@@ -7,9 +7,6 @@ An intelligent, AI-powered interview system that analyzes resumes, generates per
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4-orange.svg)](https://openai.com)
 [![Google](https://img.shields.io/badge/Google-Gemini-blue.svg)](https://ai.google.dev/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-![AI Interview Demo](https://via.placeholder.com/800x400/667eea/ffffff?text=AI+Interview+Agent+Demo)
-
 ## 🌟 Features
 
 ### 🧠 AI-Powered Analysis
@@ -51,7 +48,7 @@ An intelligent, AI-powered interview system that analyzes resumes, generates per
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/devendraBainda/ai-interview-agent.git
+   git clone https://github.com/devendraBainda/AI-Interview_Agent.git
    cd ai-interview-agent
    ```
 
@@ -101,7 +98,7 @@ An intelligent, AI-powered interview system that analyzes resumes, generates per
 #### OpenAI (Recommended for accuracy)
 ```python
 LLM_PROVIDER = LLMProvider.OPENAI
-OPENAI_API_KEY = "sk-your-api-key"
+OPENAI_API_KEY = "your-api-key"
 OPENAI_MODEL = "gpt-4o-mini"  # or "gpt-4o" for better quality
 ```
 
@@ -308,20 +305,11 @@ app.run(debug=True)
    - Record in quiet environment
    - Speak clearly and at moderate pace
 
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ### Development Setup
 ```bash
 # Clone your fork
-git clone https://github.com/yourusername/ai-interview-agent.git
+git clone https://github.com/devendraBainda/AI-Interview_Agent.git
 
 # Install development dependencies
 pip install -r requirements-dev.txt
@@ -362,16 +350,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For support and questions:
 
-- 📧 Email: [your-email@example.com](mailto:your-email@example.com)
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/ai-interview-agent/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/ai-interview-agent/discussions)
-- 📖 Documentation: [Wiki](https://github.com/yourusername/ai-interview-agent/wiki)
-
-## ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/ai-interview-agent&type=Date)](https://star-history.com/#yourusername/ai-interview-agent&Date)
-
----
+- 📧 Email: [devendrabainda192@gmail.com](mailto:devendrabainda192@gmail.com)
+- 🐛 Issues: [GitHub Issues](https://github.com/devendraBainda/AI-Interview_Agent/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/devendraBainda/AI-Interview_Agent/discussions)
+- 📖 Documentation: [Wiki](https://github.com/devendraBainda/AI-Interview_Agent/wiki)
 
 **Built with ❤️ using Flask, AI, and modern web technologies**
 
