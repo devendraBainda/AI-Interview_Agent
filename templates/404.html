@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found - AI Interview Agent{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 text-center">
+        <div class="mb-5">
+            <i class="fas fa-robot fa-5x text-muted mb-4"></i>
+            <h1 class="display-1 fw-bold text-primary">404</h1>
+            <h2 class="mb-3">Page Not Found</h2>
+            <p class="lead text-muted mb-4">
+                Oops! The AI couldn't find the page you're looking for. 
+                It might have been moved or doesn't exist.
+            </p>
+            
+            <div class="d-grid gap-2 d-md-block">
+                <a href="/" class="btn btn-primary btn-lg">
+                    <i class="fas fa-home me-2"></i>
+                    Go Home
+                </a>
+                <button class="btn btn-outline-secondary btn-lg" onclick="history.back()">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    Go Back
+                </button>
+            </div>
+        </div>
+        
+        <div class="card card-custom">
+            <div class="card-body">
+                <h5 class="text-primary mb-3">
+                    <i class="fas fa-question-circle me-2"></i>
+                    Need Help?
+                </h5>
+                <p class="text-muted mb-3">
+                    If you were in the middle of an interview, don't worry! 
+                    Your progress is saved and you can continue from where you left off.
+                </p>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <a href="/" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-play me-2"></i>
+                            Start New Interview
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <a href="/api/health" class="btn btn-outline-info w-100">
+                            <i class="fas fa-heartbeat me-2"></i>
+                            System Status
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

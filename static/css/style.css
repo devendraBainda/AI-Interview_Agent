@@ -1,0 +1,569 @@
+/* Custom Styles for AI Interview Agent */
+
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --info-color: #17a2b8;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+}
+
+.main-container {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  margin: 2rem auto;
+  max-width: 1200px;
+}
+
+.navbar-custom {
+  background: var(--primary-color);
+  border-radius: 15px 15px 0 0;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+.progress-custom {
+  height: 8px;
+  border-radius: 10px;
+}
+
+.card-custom {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.alert-custom {
+  border-radius: 10px;
+  border: none;
+}
+
+.footer {
+  background: var(--dark-color);
+  color: white;
+  padding: 2rem 0;
+  border-radius: 0 0 15px 15px;
+}
+
+.question-card {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-left: 4px solid var(--primary-color);
+}
+
+.evaluation-card {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-left: 4px solid var(--success-color);
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-icon {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Feature Cards */
+.feature-card {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.1);
+}
+
+/* Step Cards */
+.step-card {
+  position: relative;
+  padding: 2rem 1rem;
+}
+
+.step-number {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 auto 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Progress Steps */
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.progress-steps::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #e9ecef;
+  z-index: 1;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  background-color: #f8f9fa;
+  padding: 0 1rem;
+}
+
+.step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.step-label {
+  font-size: 0.875rem;
+  color: #6c757d;
+  text-align: center;
+}
+
+.step.active .step-icon {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.step.completed .step-icon {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.step.active .step-label,
+.step.completed .step-label {
+  color: var(--dark-color);
+  font-weight: 600;
+}
+
+/* Upload Area */
+.upload-area {
+  border: 3px dashed #dee2e6;
+  border-radius: 15px;
+  padding: 3rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+  cursor: pointer;
+  position: relative;
+}
+
+.upload-area:hover {
+  border-color: var(--primary-color);
+  background: #e3f2fd;
+  transform: translateY(-2px);
+}
+
+.upload-area.dragover {
+  border-color: var(--success-color);
+  background: #e8f5e8;
+  transform: scale(1.02);
+}
+
+.file-input {
+  display: none !important;
+}
+
+.upload-icon {
+  font-size: 4rem;
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.upload-area:hover .upload-icon {
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.upload-area.dragover .upload-icon {
+  color: var(--success-color);
+  animation: bounce 0.5s ease;
+}
+
+/* Progress Steps for Upload */
+.progress-step {
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  opacity: 0.5;
+}
+
+.progress-step i {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.progress-step.completed {
+  opacity: 1;
+  background-color: rgba(40, 167, 69, 0.1);
+  color: var(--success-color);
+}
+
+.progress-step.active {
+  opacity: 1;
+  background-color: rgba(0, 123, 255, 0.1);
+  color: var(--primary-color);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Chat Interface */
+.chat-container {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  max-height: 400px;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 1rem;
+  animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.ai-message .message-avatar {
+  background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+  color: white;
+  margin-right: 1rem;
+}
+
+.user-message {
+  justify-content: flex-end;
+}
+
+.user-message .message-avatar {
+  background-color: var(--secondary-color);
+  color: white;
+  margin-left: 1rem;
+}
+
+.message-content {
+  max-width: 70%;
+  padding: 1rem;
+  border-radius: 15px;
+  position: relative;
+}
+
+.ai-message .message-content {
+  background-color: white;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-message .message-content {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.message-header {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.evaluation-message .message-content {
+  background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
+  border-left: 4px solid var(--success-color);
+}
+
+.score-badge {
+  margin-bottom: 0.5rem;
+}
+
+.suggestions {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+/* Results Page */
+.celebration-icon {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%,
+  43% {
+    transform: translate3d(0, -30px, 0);
+  }
+  70% {
+    transform: translate3d(0, -15px, 0);
+  }
+  90% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 50vh;
+    padding: 2rem 0;
+  }
+
+  .display-4 {
+    font-size: 2rem;
+  }
+
+  .progress-steps {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .progress-steps::before {
+    display: none;
+  }
+
+  .message-content {
+    max-width: 85%;
+  }
+
+  .step-card {
+    padding: 1rem;
+  }
+
+  .feature-card {
+    padding: 1.5rem;
+  }
+}
+
+/* Custom Scrollbar */
+.chat-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Loading Animations */
+.spinner-border {
+  animation: spinner-border 0.75s linear infinite;
+}
+
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Button Hover Effects */
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Hover Effects */
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Progress Bar Animations */
+.progress-bar {
+  transition: width 0.6s ease;
+}
+
+.progress-bar-striped {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+}
+
+.progress-bar-animated {
+  animation: progress-bar-stripes 1s linear infinite;
+}
+
+@keyframes progress-bar-stripes {
+  0% {
+    background-position-x: 1rem;
+  }
+}
+
+/* Tab Styling */
+.nav-tabs .nav-link {
+  border: none;
+  color: var(--secondary-color);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: transparent;
+  color: var(--primary-color);
+}
+
+.nav-tabs .nav-link.active {
+  background-color: transparent;
+  border-bottom: 3px solid var(--primary-color);
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Badge Styling */
+.badge {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Alert Styling */
+.alert {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+footer {
+  margin-top: auto;
+}
+
+/* Utility Classes */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.shadow-custom {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.border-gradient {
+  border: 2px solid;
+  border-image: linear-gradient(135deg, var(--primary-color), var(--info-color)) 1;
+}

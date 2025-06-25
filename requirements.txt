@@ -1,0 +1,44 @@
+# Core Flask dependencies
+flask>=2.3.0
+werkzeug>=2.3.0
+requests>=2.31.0
+
+# Document processing
+PyPDF2>=3.0.0
+python-docx>=0.8.11
+docx2txt>=0.8
+
+# Alternative document loaders (optional)
+langchain-community>=0.0.20
+pytesseract>=0.3.10
+pdf2image>=3.1.0
+
+# Audio processing - WHISPER
+openai-whisper>=20231117
+torch>=2.0.0
+torchaudio>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Audio recording
+pyaudio>=0.2.11
+
+# Text-to-Speech options
+edge-tts>=6.1.0          # Microsoft Edge TTS (best quality)
+pyttsx3>=2.90            # Cross-platform TTS
+gtts>=2.4.0              # Google TTS (requires internet)
+
+# Windows TTS (if on Windows)
+pywin32>=306             # For Windows SAPI
+
+# LLM providers
+google-generativeai>=0.3.0    # For Gemini
+openai>=1.0.0                 # For OpenAI GPT models
+anthropic>=0.8.0              # For Claude
+groq>=0.4.0                   # For Groq (fast inference)
+
+# Async support
+aiohttp>=3.8.0
+
+# Utilities
+python-dotenv>=1.0.0

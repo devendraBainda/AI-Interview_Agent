@@ -1,0 +1,739 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Resume - AI Interview Agent{% endblock %}
+
+{% block extra_css %}
+<style>
+    .upload-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .progress-indicator {
+        margin-bottom: 2rem;
+    }
+    
+    .step-indicator {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    
+    .step {
+        display: flex;
+        align-items: center;
+        margin: 0 1rem;
+    }
+    
+    .step-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .step.completed .step-circle {
+        background: var(--success-color);
+        color: white;
+    }
+    
+    .step.active .step-circle {
+        background: var(--primary-color);
+        color: white;
+        animation: pulse 2s infinite;
+    }
+    
+    .step.pending .step-circle {
+        background: #e9ecef;
+        color: #6c757d;
+    }
+    
+    .step-line {
+        width: 60px;
+        height: 2px;
+        background: #e9ecef;
+        margin: 0 1rem;
+    }
+    
+    .step-line.completed {
+        background: var(--success-color);
+    }
+    
+    .upload-area {
+        border: 3px dashed #dee2e6;
+        border-radius: 20px;
+        padding: 4rem 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .upload-area::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(0, 123, 255, 0.1), transparent);
+        transform: rotate(45deg);
+        transition: all 0.6s ease;
+        opacity: 0;
+    }
+    
+    .upload-area:hover::before {
+        animation: shimmer 2s infinite;
+    }
+    
+    .upload-area:hover {
+        border-color: var(--primary-color);
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 123, 255, 0.2);
+    }
+    
+    .upload-area.dragover {
+        border-color: var(--success-color);
+        background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+        transform: scale(1.02);
+        box-shadow: 0 15px 35px rgba(40, 167, 69, 0.3);
+    }
+    
+    .upload-icon {
+        font-size: 5rem;
+        color: var(--secondary-color);
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+    
+    .upload-area:hover .upload-icon {
+        color: var(--primary-color);
+        transform: scale(1.1) rotate(5deg);
+    }
+    
+    .upload-area.dragover .upload-icon {
+        color: var(--success-color);
+        animation: bounce 0.6s ease infinite;
+    }
+    
+    .file-preview {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid var(--success-color);
+    }
+    
+    .file-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-right: 1rem;
+    }
+    
+    .processing-animation {
+        display: none;
+        text-align: center;
+        padding: 2rem;
+    }
+    
+    .processing-steps {
+        display: flex;
+        justify-content: space-around;
+        margin: 2rem 0;
+    }
+    
+    .processing-step {
+        text-align: center;
+        opacity: 0.3;
+        transition: all 0.5s ease;
+    }
+    
+    .processing-step.active {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    
+    .processing-step.completed {
+        opacity: 1;
+        color: var(--success-color);
+    }
+    
+    .processing-step i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    
+    .ai-brain {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        animation: think 2s ease-in-out infinite;
+    }
+    
+    .feature-highlight {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .security-badge {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(40, 167, 69, 0.1);
+        color: var(--success-color);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        margin: 0.25rem;
+    }
+    
+    @keyframes shimmer {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    @keyframes think {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+    
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.8; }
+    }
+    
+    .upload-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin: 2rem 0;
+    }
+    
+    .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-3px);
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+    
+    .tips-section {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .tip-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background: white;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .tip-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .tip-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, var(--success-color), #20c997);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="upload-container">
+    <!-- Progress Steps -->
+    <div class="step-indicator">
+        <div class="step completed">
+            <div class="step-circle">1</div>
+            <span>Enter Details</span>
+        </div>
+        <div class="step-line completed"></div>
+        <div class="step active">
+            <div class="step-circle">2</div>
+            <span>Upload Resume</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step pending">
+            <div class="step-circle">3</div>
+            <span>AI Interview</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step pending">
+            <div class="step-circle">4</div>
+            <span>Get Results</span>
+        </div>
+    </div>
+
+    <!-- Welcome Section -->
+    <div class="card card-custom mb-4">
+        <div class="card-body text-center">
+            <div class="ai-brain">
+                <i class="fas fa-brain fa-2x text-white"></i>
+            </div>
+            <h3 class="text-primary mb-3">
+                Welcome back, {{ candidate_name }}!
+            </h3>
+            <p class="lead text-muted mb-0">
+                Let's analyze your resume to create personalized interview questions tailored just for you
+            </p>
+        </div>
+    </div>
+
+    <!-- Upload Stats -->
+    <div class="upload-stats">
+        <div class="stat-card">
+            <div class="stat-number">AI</div>
+            <div class="text-muted">Powered Analysis</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="text-muted">Question Types</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">< 30s</div>
+            <div class="text-muted">Processing Time</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">100%</div>
+            <div class="text-muted">Secure & Private</div>
+        </div>
+    </div>
+
+    <!-- Main Upload Card -->
+    <div class="card card-custom">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                <i class="fas fa-cloud-upload-alt me-2"></i>
+                Upload Your Resume
+            </h4>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="/analyze" enctype="multipart/form-data" id="uploadForm">
+                <!-- Upload Area -->
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-file-upload"></i>
+                    </div>
+                    <h4 class="mb-3">Drop your resume here or click to browse</h4>
+                    <p class="text-muted mb-3">
+                        <strong>Supported formats:</strong> PDF, DOC, DOCX<br>
+                        <strong>Maximum file size:</strong> 16MB
+                    </p>
+                    
+                    <!-- Security Badges -->
+                    <div class="mb-3">
+                        <span class="security-badge">
+                            <i class="fas fa-shield-alt me-1"></i>
+                            Secure Upload
+                        </span>
+                        <span class="security-badge">
+                            <i class="fas fa-user-secret me-1"></i>
+                            Privacy Protected
+                        </span>
+                        <span class="security-badge">
+                            <i class="fas fa-trash me-1"></i>
+                            Auto-Delete
+                        </span>
+                    </div>
+                    
+                    <input type="file" 
+                           class="file-input" 
+                           id="resume_file" 
+                           name="resume_file" 
+                           accept=".pdf,.doc,.docx"
+                           required
+                           style="display: none;">
+                    
+                    <button type="button" class="btn btn-primary btn-lg" id="browseBtn">
+                        <i class="fas fa-folder-open me-2"></i>
+                        Choose File
+                    </button>
+                </div>
+                
+                <!-- File Preview -->
+                <div id="filePreview" class="file-preview" style="display: none;">
+                    <div class="d-flex align-items-center">
+                        <div class="file-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1" id="fileName">Resume.pdf</h6>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted" id="fileSize">0 KB</span>
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span class="text-success">Ready to analyze</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="clearFile()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-success btn-lg" id="analyzeBtn" disabled>
+                        <span class="spinner-border spinner-border-sm me-2" style="display: none;" id="loadingSpinner"></span>
+                        <i class="fas fa-brain me-2" id="analyzeIcon"></i>
+                        <span id="btnText">Analyze Resume & Generate Questions</span>
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Processing Animation -->
+            <div class="processing-animation" id="processingAnimation">
+                <div class="ai-brain">
+                    <i class="fas fa-cog fa-spin fa-2x text-white"></i>
+                </div>
+                <h5 class="text-primary mb-3">AI is analyzing your resume...</h5>
+                <div class="processing-steps">
+                    <div class="processing-step" id="step1">
+                        <i class="fas fa-file-text"></i>
+                        <div>Reading Content</div>
+                    </div>
+                    <div class="processing-step" id="step2">
+                        <i class="fas fa-search"></i>
+                        <div>Extracting Skills</div>
+                    </div>
+                    <div class="processing-step" id="step3">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>Generating Questions</div>
+                    </div>
+                    <div class="processing-step" id="step4">
+                        <i class="fas fa-check"></i>
+                        <div>Finalizing</div>
+                    </div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                         id="processingProgress" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips Section -->
+    <div class="tips-section">
+        <h5 class="text-primary mb-3">
+            <i class="fas fa-lightbulb me-2"></i>
+            Tips for Best Results
+        </h5>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="tip-item">
+                    <div class="tip-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div>
+                        <strong>Use a recent resume</strong><br>
+                        <small class="text-muted">Upload your most current resume for accurate analysis</small>
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <div>
+                        <strong>Include key skills</strong><br>
+                        <small class="text-muted">Make sure your technical and soft skills are clearly listed</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="tip-item">
+                    <div class="tip-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div>
+                        <strong>Highlight achievements</strong><br>
+                        <small class="text-muted">Include specific accomplishments and metrics</small>
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div>
+                        <strong>Clear formatting</strong><br>
+                        <small class="text-muted">Use standard fonts and clear section headings</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Highlight -->
+    <div class="feature-highlight">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h5 class="mb-2">🤖 AI-Powered Interview Experience</h5>
+                <p class="mb-0">
+                    Our advanced AI analyzes your resume to create personalized questions, 
+                    evaluates your responses in real-time, and provides detailed feedback 
+                    to help you improve your interview skills.
+                </p>
+            </div>
+            <div class="col-md-4 text-center">
+                <i class="fas fa-robot fa-4x opacity-75"></i>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('resume_file');
+    const browseBtn = document.getElementById('browseBtn');
+    const filePreview = document.getElementById('filePreview');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const uploadForm = document.getElementById('uploadForm');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const analyzeIcon = document.getElementById('analyzeIcon');
+    const btnText = document.getElementById('btnText');
+    const processingAnimation = document.getElementById('processingAnimation');
+
+    // Browse button click handler
+    browseBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        fileInput.click();
+    });
+
+    // Drag and drop functionality
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        if (!uploadArea.contains(e.relatedTarget)) {
+            uploadArea.classList.remove('dragover');
+        }
+    });
+
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            const dt = new DataTransfer();
+            dt.items.add(files[0]);
+            fileInput.files = dt.files;
+            handleFileSelect();
+        }
+    });
+
+    // Click to upload
+    uploadArea.addEventListener('click', function(e) {
+        if (e.target === uploadArea || e.target.closest('.upload-area') === uploadArea) {
+            fileInput.click();
+        }
+    });
+
+    // File selection handler
+    fileInput.addEventListener('change', handleFileSelect);
+
+    function handleFileSelect() {
+        const file = fileInput.files[0];
+        if (file) {
+            // Validate file type
+            const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            const allowedExtensions = ['pdf', 'doc', 'docx'];
+            
+            if (!allowedTypes.includes(file.type) && !allowedExtensions.includes(fileExtension)) {
+                showAlert('Please select a PDF, DOC, or DOCX file.', 'error');
+                clearFile();
+                return;
+            }
+
+            // Validate file size (16MB)
+            if (file.size > 16 * 1024 * 1024) {
+                showAlert('File size must be less than 16MB.', 'error');
+                clearFile();
+                return;
+            }
+
+            // Update file icon based on type
+            const fileIcon = document.querySelector('.file-icon i');
+            if (fileExtension === 'pdf') {
+                fileIcon.className = 'fas fa-file-pdf';
+            } else {
+                fileIcon.className = 'fas fa-file-word';
+            }
+
+            // Display file info
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            filePreview.style.display = 'block';
+            analyzeBtn.disabled = false;
+            
+            // Hide upload area and show preview
+            uploadArea.style.display = 'none';
+            
+            // Add success animation
+            filePreview.style.opacity = '0';
+            filePreview.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                filePreview.style.transition = 'all 0.5s ease';
+                filePreview.style.opacity = '1';
+                filePreview.style.transform = 'translateY(0)';
+            }, 100);
+        }
+    }
+
+    function clearFile() {
+        fileInput.value = '';
+        filePreview.style.display = 'none';
+        uploadArea.style.display = 'block';
+        analyzeBtn.disabled = true;
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function showAlert(message, type) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show`;
+        alertDiv.innerHTML = `
+            <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        document.querySelector('.upload-container').insertBefore(alertDiv, document.querySelector('.step-indicator'));
+        
+        setTimeout(() => {
+            alertDiv.remove();
+        }, 5000);
+    }
+
+    // Form submission handler with enhanced processing animation
+    uploadForm.addEventListener('submit', function(e) {
+        if (!fileInput.files[0]) {
+            e.preventDefault();
+            showAlert('Please select a file to upload.', 'error');
+            return;
+        }
+        
+        // Start processing animation
+        analyzeBtn.disabled = true;
+        loadingSpinner.style.display = 'inline-block';
+        analyzeIcon.style.display = 'none';
+        btnText.textContent = 'Processing...';
+        
+        // Show processing animation
+        setTimeout(() => {
+            document.querySelector('.card-body').style.display = 'none';
+            processingAnimation.style.display = 'block';
+            
+            // Animate processing steps
+            animateProcessingSteps();
+        }, 1000);
+    });
+
+    function animateProcessingSteps() {
+        const steps = ['step1', 'step2', 'step3', 'step4'];
+        const progressBar = document.getElementById('processingProgress');
+        let currentStep = 0;
+
+        function activateNextStep() {
+            if (currentStep < steps.length) {
+                // Activate current step
+                document.getElementById(steps[currentStep]).classList.add('active');
+                
+                // Update progress bar
+                const progress = ((currentStep + 1) / steps.length) * 100;
+                progressBar.style.width = progress + '%';
+                
+                // Complete previous step
+                if (currentStep > 0) {
+                    document.getElementById(steps[currentStep - 1]).classList.remove('active');
+                    document.getElementById(steps[currentStep - 1]).classList.add('completed');
+                }
+                
+                currentStep++;
+                
+                // Continue to next step
+                if (currentStep <= steps.length) {
+                    setTimeout(activateNextStep, 1500);
+                }
+            }
+        }
+
+        activateNextStep();
+    }
+
+    // Global clear function for the remove button
+    window.clearFile = clearFile;
+});
+</script>
+{% endblock %}

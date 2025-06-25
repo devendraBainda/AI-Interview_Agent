@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - AI Interview Agent{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-5">
+            <div class="mb-4">
+                <i class="fas fa-robot fa-5x text-primary"></i>
+            </div>
+            <h1 class="display-4 fw-bold text-dark mb-3">AI Interview Agent</h1>
+            <p class="lead text-muted mb-4">
+                Experience the future of recruitment with our AI-powered interview system. 
+                Upload your resume, answer questions, and get instant feedback.
+            </p>
+        </div>
+
+        <!-- Features -->
+        <div class="row mb-5">
+            <div class="col-md-4 text-center mb-4">
+                <div class="card card-custom h-100">
+                    <div class="card-body">
+                        <i class="fas fa-file-upload fa-3x text-primary mb-3"></i>
+                        <h5>Resume Analysis</h5>
+                        <p class="text-muted">Upload your resume and let AI analyze your skills and experience</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <div class="card card-custom h-100">
+                    <div class="card-body">
+                        <i class="fas fa-microphone fa-3x text-success mb-3"></i>
+                        <h5>Voice Interview</h5>
+                        <p class="text-muted">Answer questions using voice input with real-time transcription</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <div class="card card-custom h-100">
+                    <div class="card-body">
+                        <i class="fas fa-chart-line fa-3x text-warning mb-3"></i>
+                        <h5>Instant Feedback</h5>
+                        <p class="text-muted">Get detailed evaluation and improvement suggestions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Interview Form -->
+        <div class="card card-custom">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-play me-2"></i>
+                    Start Your AI Interview
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/start">
+                    <div class="mb-4">
+                        <label for="candidate_name" class="form-label">
+                            <i class="fas fa-user me-2"></i>
+                            Your Full Name
+                        </label>
+                        <input type="text" 
+                               class="form-control form-control-lg" 
+                               id="candidate_name" 
+                               name="candidate_name" 
+                               placeholder="Enter your full name"
+                               required
+                               maxlength="100">
+                        <div class="form-text">This will be used in your interview report</div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-rocket me-2"></i>
+                            Begin Interview Process
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Process Overview -->
+        <div class="mt-5">
+            <h3 class="text-center mb-4">How It Works</h3>
+            <div class="row">
+                <div class="col-md-3 text-center mb-3">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <span class="fw-bold">1</span>
+                    </div>
+                    <h6 class="mt-2">Enter Name</h6>
+                    <small class="text-muted">Provide your information</small>
+                </div>
+                <div class="col-md-3 text-center mb-3">
+                    <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <span class="fw-bold">2</span>
+                    </div>
+                    <h6 class="mt-2">Upload Resume</h6>
+                    <small class="text-muted">AI analyzes your background</small>
+                </div>
+                <div class="col-md-3 text-center mb-3">
+                    <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <span class="fw-bold">3</span>
+                    </div>
+                    <h6 class="mt-2">Answer Questions</h6>
+                    <small class="text-muted">Voice or text responses</small>
+                </div>
+                <div class="col-md-3 text-center mb-3">
+                    <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <span class="fw-bold">4</span>
+                    </div>
+                    <h6 class="mt-2">Get Results</h6>
+                    <small class="text-muted">Detailed feedback report</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

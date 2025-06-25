@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Server Error - AI Interview Agent{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 text-center">
+        <div class="mb-5">
+            <i class="fas fa-exclamation-triangle fa-5x text-warning mb-4"></i>
+            <h1 class="display-1 fw-bold text-danger">500</h1>
+            <h2 class="mb-3">Internal Server Error</h2>
+            <p class="lead text-muted mb-4">
+                Something went wrong on our end. The AI is working to fix the issue. 
+                Please try again in a few moments.
+            </p>
+            
+            <div class="d-grid gap-2 d-md-block">
+                <button class="btn btn-primary btn-lg" onclick="location.reload()">
+                    <i class="fas fa-redo me-2"></i>
+                    Try Again
+                </button>
+                <a href="/" class="btn btn-outline-secondary btn-lg">
+                    <i class="fas fa-home me-2"></i>
+                    Go Home
+                </a>
+            </div>
+        </div>
+        
+        <div class="card card-custom">
+            <div class="card-body">
+                <h5 class="text-danger mb-3">
+                    <i class="fas fa-tools me-2"></i>
+                    Troubleshooting
+                </h5>
+                <div class="text-start">
+                    <p class="text-muted mb-2">This error might be caused by:</p>
+                    <ul class="text-muted">
+                        <li>AI model temporarily unavailable</li>
+                        <li>High server load</li>
+                        <li>Network connectivity issues</li>
+                        <li>File processing problems</li>
+                    </ul>
+                    <p class="text-muted mb-3">
+                        <strong>What you can do:</strong>
+                    </p>
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <button class="btn btn-outline-primary w-100" onclick="location.reload()">
+                                <i class="fas fa-sync me-2"></i>
+                                Refresh Page
+                            </button>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <a href="/api/health" class="btn btn-outline-info w-100">
+                                <i class="fas fa-heartbeat me-2"></i>
+                                Check Status
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <small class="text-muted">
+                <i class="fas fa-clock me-1"></i>
+                If the problem persists, please try again in a few minutes.
+            </small>
+        </div>
+    </div>
+</div>
+{% endblock %}
